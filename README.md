@@ -49,4 +49,4 @@ This will only undistort the video using the intrinsic matrix and distortion par
 This will convert the undistorted frames to a video and save it to a new file in the ``OUTPUT`` folder.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)

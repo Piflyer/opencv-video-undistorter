@@ -21,6 +21,7 @@ This project is based on this [OpenCV Tutorial.](https://docs.opencv.org/4.x/dc/
 * ``CB_Y``: Number of inner corners plus one in the checkerboard pattern in the y direction.
 * ``OUTPUT``: Output folder for undistorted images and video.
 * ``VIDEO``: Video to be undistorted.
+* ``CROP``: Crop the video so that the distorted bounds are non visible. Accepts ``True`` or ``False``. 
 
 This will perform camera calibration, undistort the video, and save the undistorted video to a new file in the ``OUTPUT`` folder.
 
@@ -37,6 +38,7 @@ This will only perform camera calibration on the checkerboard images and save th
 ``python3 extractandcalib.py --videoprocessing VIDEO OUTPUT``
 * ``OUTPUT``: Output folder for undistorted images and video.
 * ``VIDEO``: Video to be undistorted.
+* ``CROP``: Crop the video so that the distorted bounds are non visible. Accepts ``True`` or ``False``. 
 
 This will only undistort the video using the intrinsic matrix and distortion parameters in the ``OUTPUT`` folder. The video will be saved to a new file in the ``OUTPUT`` folder.
 

@@ -6,7 +6,7 @@ This project is based on this [OpenCV Tutorial.](https://docs.opencv.org/4.x/dc/
 ## Installation
 1) Clone the repository
 
-``git clone ``
+``git clone https://github.com/Piflyer/opencv-video-undistorter``
 
 2) Install the requirements
 

@@ -4,6 +4,11 @@ This is a simple tool to undistort videos using OpenCV. The program first calibr
 This project is based on this [OpenCV Tutorial.](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html)
 
 ## Installation
+### Prerequisites:
+
+* Python 3.9+
+* Checkerboard calibration
+
 1) Clone the repository
 
 ``git clone https://github.com/Piflyer/opencv-video-undistorter``

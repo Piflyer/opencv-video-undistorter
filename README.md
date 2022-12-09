@@ -42,7 +42,7 @@ This will only undistort the video using the intrinsic matrix and distortion par
 
 ### Frames to Video
 ``python3 extractandcalib.py --frames2video FRAMES_PATH FPS NAME``
-* ``FRAMES_PATH``: Path to folder containing undistorted frames.
+* ``FRAMES_PATH``: Path to folder containing undistorted frames. Ideally should be numbered in an increasing sequence.
 * ``FPS``: Frames per second of the video.
 * ``NAME``: Name of the video file.
 

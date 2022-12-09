@@ -69,7 +69,7 @@ def calibrate(matrix_x, matrix_y, image_dir, output_folder):
         print("Camera Calibration Done!")
 
 
-def videoprocessing(video_path, output_folder, name):
+def videoprocessing(video_path, output_folder, name, crop=False):
     print("Processing video...")
     cap = cv.VideoCapture(video_path)
     fps = cap.get(cv.CAP_PROP_FPS)
@@ -99,8 +99,9 @@ def videoprocessing(video_path, output_folder, name):
             newcameramtx, roi = cv.getOptimalNewCameraMatrix(globmtx, globdist, (w, h), 1, (w, h))
             dst = cv.undistort(frame, globmtx, globdist, None, newcameramtx)
             # crop the image
-            x, y, w, h = roi
-            dst = dst[y:y + h, x:x + w]
+            if crop:
+                x, y, w, h = roi
+                dst = dst[y:y + h, x:x + w]
             cv.imwrite(frame_path + "/frame" + str(i) + ".jpg", dst)
             i += 1
             print("Frame " + str(i) + " processed!")
@@ -124,7 +125,7 @@ def frames2video(path, fps, name):
         size = (width, height)
         img_array.append(img)
     path = os.path.join(path, name)
-    out = cv.VideoWriter(path + '.mp4', cv.VideoWriter_fourcc(*'MP4V'), int(fps), size)
+    out = cv.VideoWriter(path + '.mp4', cv.VideoWriter_fourcc(*'avc1'), int(fps), size)
     for i in range(len(img_array)):
         out.write(img_array[i])
     out.release()
@@ -140,7 +141,8 @@ elif sys.argv[1] == "--videoprocessing":
     FILE_INPUT = sys.argv[2]
     OUTPUT_FOLDER = sys.argv[3]
     NAME = sys.argv[4]
-    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME)
+    CROP = sys.argv[5]
+    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME, CROP)
 elif sys.argv[1] == "--frames2video":
     OUTPUT_FOLDER = sys.argv[2]
     FPS = sys.argv[3]
@@ -153,8 +155,9 @@ elif sys.argv[1] == "--all":
     OUTPUT_FOLDER = sys.argv[5]
     FILE_INPUT = sys.argv[6]
     NAME = sys.argv[7]
+    CROP = sys.argv[8]
     calibrate(CHECKERBOARD_SIZE_X, CHECKERBOARD_SIZE_Y, CHECKERBOARD_FOLDER, OUTPUT_FOLDER)
-    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME)
+    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME, CROP)
 else:
     print("Command not found. Here are a list of commands:")
     print("--all CHECKERBOARD_FOLDER CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER VIDEO_INPUT:     Calibrate the camera, process a video, and create a video from a folder of frames")

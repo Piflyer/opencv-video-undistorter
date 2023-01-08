@@ -1,7 +1,7 @@
 # OpenCV Video Undistorter
 This is a simple tool to undistort videos using OpenCV. The program first calibrates the camera using a set of images of a checkerboard to find the intrinsic matrix and distortion parameters. It breaks down each video frame by frame and undistorts each frame using the calibration parameters. The undistorted video is saved to a new file. 
 
-This project is based on this [OpenCV Tutorial.](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html)
+This project is based on this [OpenCV Calibratin Guide.](https://docs.opencv.org/4.x/dc/dbb/tutorial_py_calibration.html) The project is also available on [Streamlit.](https://videoundistort.streamlit.app/).
 
 ## Installation
 ### Prerequisites:

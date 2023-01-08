@@ -40,9 +40,10 @@ This will perform camera calibration, undistort the video, and save the undistor
 This will only perform camera calibration on the checkerboard images and save the intrinsic matrix and distortion parameters to a file in the ``OUTPUT`` folder. These parameters can then be used to undistort videos using the ``--undistort`` option.
 
 ### Undistort Video
-``python3 extractandcalib.py --videoprocessing VIDEO OUTPUT``
-* ``OUTPUT``: Output folder for undistorted images and video.
+``python3 extractandcalib.py --videoprocessing VIDEO OUTPUT NAME CROP``
 * ``VIDEO``: Video to be undistorted.
+* ``OUTPUT``: Output folder for undistorted video.
+* ``NAME``: Name of the new video.
 * ``CROP``: Crop the video so that the distorted bounds are non visible. Accepts ``True`` or ``False``. 
 
 This will only undistort the video using the intrinsic matrix and distortion parameters in the ``OUTPUT`` folder. The video will be saved to a new file in the ``OUTPUT`` folder.

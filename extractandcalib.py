@@ -74,13 +74,9 @@ def videoprocessing(video_path, output_folder, name, crop=False):
     print("Processing video...")
     cap = cv.VideoCapture(video_path)
     fps = cap.get(cv.CAP_PROP_FPS)
-    i = 0
-    frame_path = os.path.join(output_folder, "frames")
-    try:
-        shutil.rmtree(frame_path, ignore_errors=True)
-    except:
-        pass
-    os.mkdir(frame_path)
+    size = (int(cap.get(cv.CAP_PROP_FRAME_WIDTH)), int(cap.get(cv.CAP_PROP_FRAME_HEIGHT)))
+    path = os.path.join(output_folder, name + ".mp4")
+    writer = cv.VideoWriter(path, cv.VideoWriter_fourcc(*'avc1'), int(fps), size)
     print("Calibrating...")
     try: 
         globdist
@@ -100,19 +96,23 @@ def videoprocessing(video_path, output_folder, name, crop=False):
             newcameramtx, roi = cv.getOptimalNewCameraMatrix(globmtx, globdist, (w, h), 1, (w, h))
             dst = cv.undistort(frame, globmtx, globdist, None, newcameramtx)
             # crop the image
-            if crop:
-                x, y, w, h = roi
-                dst = dst[y:y + h, x:x + w]
-            cv.imwrite(frame_path + "/frame" + str(i) + ".jpg", dst)
-            i += 1
-            print("Frame " + str(i) + " processed!")
+            # if crop:
+            #     x, y, w, h = roi
+            #     dst = dst[y:y + h, x:x + w]
+            # save the frame
+            print("Frame " + str(cap.get(cv.CAP_PROP_POS_FRAMES)) + " processed!")
+            writer.write(dst)
+            # cv.imwrite(frame_path + "/frame" + str(i) + ".jpg", dst)
+            # i += 1
+            # print("Frame " + str(i) + " processed!")
             
         else:
             break
     cap.release()
+    writer.release()
     cv.destroyAllWindows()
     print("Video Processing Done!")
-    frames2video(output_folder, fps, name)
+    #frames2video(output_folder, fps, name)
 
 def frames2video(path, fps, name):
     print("Creating video...")
@@ -154,7 +154,7 @@ if sys.argv[1] == "--calibrate":
 elif sys.argv[1] == "--videoprocessing":
     videoprocessing(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 elif sys.argv[1] == "--frames2video":
-    frames2video(sys.argv[2], sys.argv[3], sys.argv[4])
+    frames2video(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 elif sys.argv[1] == "--all":
     calibrate(sys.argv[3], sys.argv[4], sys.argv[2], sys.argv[5])
     videoprocessing(sys.argv[6], sys.argv[5], sys.argv[7], sys.argv[8])
@@ -162,7 +162,7 @@ elif sys.argv[1] == "--all":
 #     print("Command not found. Here are a list of commands:")
 #     print("--all CHECKERBOARD_FOLDER CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER VIDEO_INPUT:     Calibrate the camera, process a video, and create a video from a folder of frames")
 #     print("--calibrate CHECKERBOARD_FOLDER_PATH CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER:     Calibrate the camera and produce an intrinsic matrix and distortion coefficients")
-#     print("--videoprocessing VIDEO_PATH OUTPUT_FOLDER NAME:     Process a video with an existing intrinsic matrix and distortion coefficients")
+#     print("--videoprocessing VIDEO_PATH OUTPUT_FOLDER NAME CROP:     Process a video with an existing intrinsic matrix and distortion coefficients")
 #     print("--frames2video FRAMES_PATH FPS NAME:     Create a video from a folder of frames")
 #     exit()
 

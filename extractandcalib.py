@@ -7,6 +7,7 @@ import re
 import shutil
 from pathlib import Path 
 import math
+#import argparse
 
 '''
 This script is used to undistort a video using a checkerboard calibration. This based on the OpenCV tutorial:
@@ -131,40 +132,39 @@ def frames2video(path, fps, name):
     out.release()
     print("Video Created!")
 
+
+# parser = argparse.ArgumentParser(description='Calibrate and process video')
+# parser.add_argument('--all', nargs=5, help='Calibrate and process video')
+# parser.add_argument('--calibrate', nargs=5, help='Calibrate camera')
+# parser.add_argument('--videoprocessing', nargs=5, help='Process video')
+# parser.add_argument('--frame2videos', nargs=4, help='Convert frames to video')
+# args = parser.parse_args()
+# if args.calibrate:
+#     calibrate(args.calibrate[0], args.calibrate[1], args.calibrate[2], args.calibrate[3])
+# elif args.videoprocessing:
+#     videoprocessing(args.videoprocessing[0], args.videoprocessing[1], args.videoprocessing[2], args.videoprocessing[3])
+# elif args.frame2videos:
+#     frames2video(args.frame2videos[0], args.frame2videos[1], args.frame2videos[2], args.frame2videos[3])
+# elif args.all:
+#     calibrate(args.all[0], args.all[1], args.all[2], args.all[3])
+#     videoprocessing(args.all[4], args.all[3], args.all[2])
+#     
 if sys.argv[1] == "--calibrate":
-    CHECKERBOARD_FOLDER = sys.argv[2]
-    CHECKERBOARD_SIZE_X = sys.argv[3]
-    CHECKERBOARD_SIZE_Y = sys.argv[4]
-    OUTPUT_FOLDER = sys.argv[5]
-    calibrate(CHECKERBOARD_SIZE_X, CHECKERBOARD_SIZE_Y, CHECKERBOARD_FOLDER, OUTPUT_FOLDER)
+    calibrate(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 elif sys.argv[1] == "--videoprocessing":
-    FILE_INPUT = sys.argv[2]
-    OUTPUT_FOLDER = sys.argv[3]
-    NAME = sys.argv[4]
-    CROP = sys.argv[5]
-    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME, CROP)
+    videoprocessing(sys.argv[2], sys.argv[3], sys.argv[4], sys.argv[5])
 elif sys.argv[1] == "--frames2video":
-    OUTPUT_FOLDER = sys.argv[2]
-    FPS = sys.argv[3]
-    NAME = sys.argv[4]
-    frames2video(OUTPUT_FOLDER, FPS, NAME)
+    frames2video(sys.argv[2], sys.argv[3], sys.argv[4])
 elif sys.argv[1] == "--all":
-    CHECKERBOARD_FOLDER = sys.argv[2]
-    CHECKERBOARD_SIZE_X = sys.argv[3]
-    CHECKERBOARD_SIZE_Y = sys.argv[4]
-    OUTPUT_FOLDER = sys.argv[5]
-    FILE_INPUT = sys.argv[6]
-    NAME = sys.argv[7]
-    CROP = sys.argv[8]
-    calibrate(CHECKERBOARD_SIZE_X, CHECKERBOARD_SIZE_Y, CHECKERBOARD_FOLDER, OUTPUT_FOLDER)
-    videoprocessing(FILE_INPUT, OUTPUT_FOLDER, NAME, CROP)
-else:
-    print("Command not found. Here are a list of commands:")
-    print("--all CHECKERBOARD_FOLDER CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER VIDEO_INPUT:     Calibrate the camera, process a video, and create a video from a folder of frames")
-    print("--calibrate CHECKERBOARD_FOLDER_PATH CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER:     Calibrate the camera and produce an intrinsic matrix and distortion coefficients")
-    print("--videoprocessing VIDEO_PATH OUTPUT_FOLDER NAME:     Process a video with an existing intrinsic matrix and distortion coefficients")
-    print("--frames2video FRAMES_PATH FPS NAME:     Create a video from a folder of frames")
-    exit()
+    calibrate(sys.argv[3], sys.argv[4], sys.argv[2], sys.argv[5])
+    videoprocessing(sys.argv[6], sys.argv[5], sys.argv[7], sys.argv[8])
+# else:
+#     print("Command not found. Here are a list of commands:")
+#     print("--all CHECKERBOARD_FOLDER CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER VIDEO_INPUT:     Calibrate the camera, process a video, and create a video from a folder of frames")
+#     print("--calibrate CHECKERBOARD_FOLDER_PATH CHECKERBOARD_SIZE_X CHECKERBOARD_SIZE_Y OUTPUT_FOLDER:     Calibrate the camera and produce an intrinsic matrix and distortion coefficients")
+#     print("--videoprocessing VIDEO_PATH OUTPUT_FOLDER NAME:     Process a video with an existing intrinsic matrix and distortion coefficients")
+#     print("--frames2video FRAMES_PATH FPS NAME:     Create a video from a folder of frames")
+#     exit()
 
 
 

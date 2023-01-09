@@ -6,7 +6,14 @@ import io
 import subprocess
 import os
 import streamlit_ext as ste
-import ffmpeg
+import whatimage
+import pyheif
+import pathlib
+
+def saveheif(image):
+    imread = pyheif.read_heif(image)
+    save = Image.frombytes(imread.mode, imread.size, imread.data)
+    save.save("image.jpg")
 
 def calibrate(matrix_x, matrix_y, calibration_img, output, video):
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
@@ -18,8 +25,13 @@ def calibrate(matrix_x, matrix_y, calibration_img, output, video):
         global runcount
         runcount = True
         st.write("Processing image: " + calib_img.name)
-        image = Image.open(calib_img)
-        image = image.save("image.jpg")
+        fmt = pathlib.Path(calib_img.name).suffix[1:]
+        print(fmt)
+        if fmt.lower() in ["heic", "heif", 'avif']:
+            saveheif(calib_img)
+        else:
+            image = Image.open(calib_img)
+            image = image.save("image.jpg")
         calib_img = cv.imread("image.jpg")
         gray = cv.cvtColor(calib_img, cv.COLOR_BGR2GRAY)
         ret, corners = cv.findChessboardCorners(gray, (matrix_x, matrix_y), None)
@@ -134,7 +146,7 @@ if "runcount" not in st.session_state:
             #### Step 2: Upload images of a checkerboard
             Upload images of a checkerboard. The checkerboard should be fully seen in each image. The images should be taken from different angles and distances from the camera. 10-12 images should be enough.
             """)
-            calibration_img = st.file_uploader("Upload images of a checkerboard", type=["jpg", "png", "jpeg"], accept_multiple_files=True, key="video_process")
+            calibration_img = st.file_uploader("Upload images of a checkerboard", type=["jpg", "png", "jpeg", "heif", "heic"], accept_multiple_files=True, key="video_process")
             st.button("Calibrate Camera", on_click=calibrate, args=(matrix_x, matrix_y, calibration_img, True, None), key="videobutton")
 
     with tab2:

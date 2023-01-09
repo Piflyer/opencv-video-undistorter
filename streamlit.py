@@ -3,10 +3,8 @@ import cv2 as cv
 import numpy as np
 from PIL import Image
 import io
-import subprocess
 import os
 import streamlit_ext as ste
-import whatimage
 import pyheif
 import pathlib
 

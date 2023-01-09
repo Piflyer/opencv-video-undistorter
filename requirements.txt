@@ -55,5 +55,4 @@ tzlocal==4.2
 urllib3==1.26.13
 validators==0.20.0
 Werkzeug==2.2.2
-whatimage==0.0.3
 zipp==3.11.0

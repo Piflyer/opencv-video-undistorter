@@ -17,7 +17,9 @@ def calibrate(matrix_x, matrix_y, calibration_img, output, video):
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
     objpoints = []
     imgpoints = []
-    objp = np.zeros((matrix_x * matrix_y, 3), np.float32) * size_sq
+    matrix_x *= size_sq
+    matrix_y *= size_sq
+    objp = np.zeros((matrix_x * matrix_y, 3), np.float32)
     objp[:, :2] = np.mgrid[0:matrix_x, 0:matrix_y].T.reshape(-1, 2)
     for calib_img in calibration_img:
         global runcount

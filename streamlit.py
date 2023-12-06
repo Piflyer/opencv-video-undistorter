@@ -137,7 +137,7 @@ if "runcount" not in st.session_state:
             #### Step 1: Set the number of squares in the checkerboard
             Set the number of square to calibrate the camera. It should be the number of square on each side of the checkerboard minus one.
             """)
-            size_sq = st.number_input("Size of square in meters", min_value=1, max_value=100, key="size_sq")
+            size_sq = st.number_input("Size of square in meters", min_value=0, max_value=100, key="size_sq")
             matrix_x = st.number_input("Number of squares in the x direction", min_value=1, max_value=100, key="matrix_x")
             matrix_y = st.number_input("Number of squares in the y direction", min_value=1, max_value=100, key="matrix_y")
         with st.container():
@@ -159,7 +159,7 @@ if "runcount" not in st.session_state:
             #### Step 1: Set the number of squares in the checkerboard
             Set the number of square to calibrate the camera. It should be the number of square on each side of the checkerboard minus one.
             """)
-            size_sq = st.number_input("Size of square in meters", min_value=1, max_value=100, key="size_sq")
+            size_sq = st.number_input("Size of square in meters", min_value=0, max_value=100, key="size_sq")
             matrix_x = st.number_input("Number of squares in the x direction", min_value=1, max_value=100)
             matrix_y = st.number_input("Number of squares in the y direction", min_value=1, max_value=100)
         with st.container():

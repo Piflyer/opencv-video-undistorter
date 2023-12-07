@@ -13,7 +13,7 @@ def saveheif(image):
     save = Image.frombytes(imread.mode, imread.size, imread.data)
     save.save("image.jpg")
 
-def calibrate(matrix_x, matrix_y, calibration_img, output, video):
+def calibrate(matrix_x, matrix_y, calibration_img, output, video, size_sq):
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
     objpoints = []
     imgpoints = []
@@ -148,7 +148,7 @@ if "runcount" not in st.session_state:
             Upload images of a checkerboard. The checkerboard should be fully seen in each image. The images should be taken from different angles and distances from the camera. 10-12 images should be enough.
             """)
             calibration_img = st.file_uploader("Upload images of a checkerboard", type=["jpg", "png", "jpeg", "heif", "heic"], accept_multiple_files=True, key="video_process")
-            st.button("Calibrate Camera", on_click=calibrate, args=(matrix_x, matrix_y, calibration_img, True, None), key="videobutton")
+            st.button("Calibrate Camera", on_click=calibrate, args=(matrix_x, matrix_y, calibration_img, True, None, size_sq), key="videobutton")
 
     with tab2:
         st.write("""
@@ -176,7 +176,7 @@ if "runcount" not in st.session_state:
             Upload a video to process. The video should be taken from the same camera as the images used to calibrate the camera.
             """)
             video = st.file_uploader("Upload Video", type=["mp4", "mov", "avi"], key="video_button")
-            st.button("Process Video", on_click=calibrate, args=(matrix_x, matrix_y, calibration_img, False, video), key="button")
+            st.button("Process Video", on_click=calibrate, args=(matrix_x, matrix_y, calibration_img, False, video, size_sq), key="button")
 
     with tab3:
         st.write("""

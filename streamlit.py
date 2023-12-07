@@ -17,6 +17,8 @@ def calibrate(matrix_x, matrix_y, calibration_img, output, video, size_sq):
     criteria = (cv.TERM_CRITERIA_EPS + cv.TERM_CRITERIA_MAX_ITER, 30, 0.001)
     objpoints = []
     imgpoints = []
+    globmtx = None
+    globdist = None
     matrix_x *= size_sq
     matrix_y *= size_sq
     objp = np.zeros((matrix_x * matrix_y, 3), np.float32)
